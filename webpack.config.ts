@@ -112,6 +112,13 @@ const config: webpack.Configuration = {
     },
   },
   plugins: compact([
+    new EslintWebpackPlugin({
+      extensions: ["ts", "tsx"],
+      failOnError: mode === "production",
+      failOnWarning: mode === "production",
+      files: "./src",
+    }),
+    new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "public/index.html",
@@ -123,11 +130,7 @@ const config: webpack.Configuration = {
           patterns: [{ from: "public", filter: (path) => !path.endsWith("index.html") }],
         })
       : null,
-    mode === "development" ? new ForkTsCheckerWebpackPlugin() : null,
     mode === "development" ? new ReactRefreshWebpackPlugin({ overlay: true }) : null,
-    mode === "development"
-      ? new EslintWebpackPlugin({ extensions: ["ts", "tsx"], failOnError: false, files: "./src" })
-      : null,
   ]),
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
