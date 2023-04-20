@@ -1,4 +1,5 @@
 import css from "./App.module.scss";
+import { Counter } from "./Counter";
 import tools from "./data";
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         target="_blank">
         Webpack Template
       </a>
+      <Counter />
     </div>
   );
 }
