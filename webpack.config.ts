@@ -7,7 +7,6 @@ import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import * as path from "path";
-import ReactRefreshTypeScript from "react-refresh-typescript";
 import * as webpack from "webpack";
 import "webpack-dev-server";
 
@@ -90,17 +89,9 @@ const config: webpack.Configuration = {
         use: [...cssLoaders, "sass-loader"],
       },
       {
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
-        test: /\.(ts|tsx)$/,
-        use: {
-          loader: "ts-loader",
-          options: {
-            transpileOnly: mode === "development",
-            getCustomTransformers: () => ({
-              before: compact([mode === "development" ? ReactRefreshTypeScript() : null]),
-            }),
-          },
-        },
+        use: "babel-loader",
       },
     ],
   },
