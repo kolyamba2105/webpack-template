@@ -89,29 +89,27 @@ const config: webpack.Configuration = {
         use: [...cssLoaders, "sass-loader"],
       },
       {
-        test: /\.(js|jsx|ts|tsx)$/,
+        test: /\.(ts|tsx)$/,
         include: path.join(__dirname, "src"),
-        use: [
-          {
-            loader: "swc-loader",
-            options: {
-              env: { mode: "usage" },
-              jsc: {
-                parser: {
-                  syntax: "typescript",
-                  tsx: true,
-                  dynamicImport: true,
-                },
-                transform: {
-                  react: {
-                    runtime: "automatic",
-                    refresh: mode === "development",
-                  },
+        use: {
+          loader: "swc-loader",
+          options: {
+            env: { mode: "usage" },
+            jsc: {
+              parser: {
+                syntax: "typescript",
+                tsx: true,
+                dynamicImport: true,
+              },
+              transform: {
+                react: {
+                  runtime: "automatic",
+                  refresh: mode === "development",
                 },
               },
             },
           },
-        ],
+        },
       },
     ],
   },
