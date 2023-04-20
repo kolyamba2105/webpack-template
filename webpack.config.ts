@@ -90,8 +90,28 @@ const config: webpack.Configuration = {
       },
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        exclude: /node_modules/,
-        use: "babel-loader",
+        include: path.join(__dirname, "src"),
+        use: [
+          {
+            loader: "swc-loader",
+            options: {
+              env: { mode: "usage" },
+              jsc: {
+                parser: {
+                  syntax: "typescript",
+                  tsx: true,
+                  dynamicImport: true,
+                },
+                transform: {
+                  react: {
+                    runtime: "automatic",
+                    refresh: mode === "development",
+                  },
+                },
+              },
+            },
+          },
+        ],
       },
     ],
   },
